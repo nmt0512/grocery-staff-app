@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary_color">#a83232</color>
+    <color name="bland_primary_color">#ffde91</color>
+    <color name="color_bg_tiny_pink">#ffd5ad</color>
+    <color name="grey">#b0b0b0</color>
+    <color name="green">#19a337</color>
+    <color name="yellow">#dab600</color>
+    <color name="pick_up_red">#c2160a</color>
+    <color name="pick_up_orange">#ec9b00</color>
+    <color name="pick_up_yellow">#FFCE03</color>
+</resources>

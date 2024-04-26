@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtBillId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:text="bill_id"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/image_view_bill"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:id="@+id/txtProduct1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="product_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtProduct2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:lines="1"
+                android:text="product_2"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtProduct1" />
+
+            <TextView
+                android:id="@+id/txtOtherProductNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="other_product"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtProduct2" />
+
+            <TextView
+                android:id="@+id/labelPickUpTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Lấy hàng lúc: "
+                app:layout_constraintBottom_toTopOf="@+id/txtBillStatus"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/txtPickUpTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="pick_up_time"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txtBillStatus"
+                app:layout_constraintStart_toEndOf="@+id/labelPickUpTime" />
+
+            <TextView
+                android:id="@+id/txtBillStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bill_status"
+                android:textColor="@color/primary_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+</layout>

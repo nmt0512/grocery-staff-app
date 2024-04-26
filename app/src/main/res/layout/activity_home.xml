@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primary_color"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Danh sách hóa đơn"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nsv_rv_bill"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_bill_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/primary_color" />
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_bg_tiny_pink"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chi tiết đơn"
+                    android:textAlignment="center"
+                    android:textColor="@color/primary_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_layout_bill_detail" />
+
+            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                android:id="@+id/layout_bill_detail"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent">-->
+
+            <!--                <androidx.core.widget.NestedScrollView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="0dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    app:layout_constraintBottom_toTopOf="@+id/txtCustomerId"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+            <!--                    <androidx.recyclerview.widget.RecyclerView-->
+            <!--                        android:id="@+id/rv_bill_item"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content" />-->
+            <!--                </androidx.core.widget.NestedScrollView>-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/txtCustomerId"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:text="customer_id"-->
+            <!--                    app:layout_constraintBottom_toTopOf="@+id/txtTotalPrice"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/txtTotalPrice"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:text="total_price"-->
+            <!--                    android:textColor="@color/primary_color"-->
+            <!--                    app:layout_constraintBottom_toTopOf="@+id/txtOrderTime"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/txtOrderTime"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:text="order_time"-->
+            <!--                    app:layout_constraintBottom_toTopOf="@+id/txtPickUpTime"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/txtPickUpTime"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="10dp"-->
+            <!--                    android:layout_marginBottom="20dp"-->
+            <!--                    android:text="pick_up_time"-->
+            <!--                    android:textColor="@color/primary_color"-->
+            <!--                    app:layout_constraintBottom_toTopOf="@+id/txtBillStatus"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/txtBillStatus"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:text="bill_status"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    app:layout_constraintBottom_toTopOf="@id/layout_btn"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:id="@+id/layout_btn"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="horizontal"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent">-->
+
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:orientation="vertical">-->
+
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/btn_prepare"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:background="@color/yellow"-->
+            <!--                            android:paddingVertical="10dp"-->
+            <!--                            android:text="Đã chuẩn bị"-->
+            <!--                            android:textAlignment="center"-->
+            <!--                            android:textColor="@color/white"-->
+            <!--                            android:textStyle="bold" />-->
+
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/btn_cancel"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:background="@color/red"-->
+            <!--                            android:paddingVertical="10dp"-->
+            <!--                            android:text="Hủy đơn"-->
+            <!--                            android:textAlignment="center"-->
+            <!--                            android:textColor="@color/white"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
+
+            <!--                    <LinearLayout-->
+            <!--                        android:id="@+id/btn_complete"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:background="@color/green"-->
+            <!--                        android:orientation="horizontal">-->
+
+            <!--                        <TextView-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center"-->
+            <!--                            android:text="Hoàn thành"-->
+            <!--                            android:textAlignment="center"-->
+            <!--                            android:textColor="@color/white"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
+            <!--                </LinearLayout>-->
+
+            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </LinearLayout>
+    </LinearLayout>
+</layout>
