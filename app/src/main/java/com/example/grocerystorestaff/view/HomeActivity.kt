@@ -62,7 +62,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
             binding.tabLayout.newTab().setText(eightBlankSpace + "Đã hoàn thành" + eightBlankSpace)
         )
 
-        socketIOClient = IO.socket(RetrofitClient.SOCKET_URI)
+        socketIOClient = IO.socket(RetrofitClient.BASE_URI)
         val onTodayNewBill = Emitter.Listener { args ->
             this.runOnUiThread {
                 newPendingBill++

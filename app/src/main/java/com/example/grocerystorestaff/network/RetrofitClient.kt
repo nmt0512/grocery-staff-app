@@ -10,8 +10,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    const val SOCKET_URI = "https://11bd-101-99-12-14.ngrok-free.app"
-    private const val BASE_URL = "https://driving-sweeping-joey.ngrok-free.app" + "/api/"
+    const val BASE_URI = "https://driving-sweeping-joey.ngrok-free.app"
+    private const val BASE_URL = "$BASE_URI/api/"
     private const val TIME_OUT: Long = 10
     private const val LANGUAGE_VI: String = "vi"
 
