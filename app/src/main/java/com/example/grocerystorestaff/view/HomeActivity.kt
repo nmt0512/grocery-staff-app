@@ -1,5 +1,8 @@
 package com.example.grocerystorestaff.view
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +13,7 @@ import com.example.grocerystorestaff.databinding.ActivityHomeBinding
 import com.example.grocerystorestaff.enums.BillStatus
 import com.example.grocerystorestaff.model.response.bill.BillResponse
 import com.example.grocerystorestaff.network.RetrofitClient
+import com.example.grocerystorestaff.utils.ApplicationPreference
 import com.example.grocerystorestaff.viewmodel.BillViewModel
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.Tab
@@ -17,8 +21,9 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 
-
 class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
+
+    private lateinit var logoutConfirmDialog: AlertDialog
 
     private var billDetailFragment: BillDetailFragment? = null
 
@@ -44,6 +49,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
     override fun initView() {
         loadingDialog?.dismiss()
 
+        val logoutConfirmDialogListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    ApplicationPreference.getInstance(this)?.logout()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+
+                DialogInterface.BUTTON_NEGATIVE -> {
+                    dialog.dismiss()
+                }
+            }
+        }
+        logoutConfirmDialog = AlertDialog.Builder(this)
+            .setTitle("Đăng xuất")
+            .setMessage("Bạn có chắc chắn muốn đăng xuất ?")
+            .setPositiveButton("OK", logoutConfirmDialogListener)
+            .setNegativeButton("Cancel", logoutConfirmDialogListener)
+            .create()
+
         billViewModel = BillViewModel(this)
         binding.rvBillList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -60,6 +86,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
         )
         binding.tabLayout.addTab(
             binding.tabLayout.newTab().setText(eightBlankSpace + "Đã hoàn thành" + eightBlankSpace)
+        )
+
+        binding.tabLayout.addTab(
+            binding.tabLayout.newTab().setText(eightBlankSpace + "Đã hủy" + eightBlankSpace)
         )
 
         socketIOClient = IO.socket(RetrofitClient.BASE_URI)
@@ -95,6 +125,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
                     billStatus = BillStatus.PREPARED
                 } else if (position == 2) {
                     billStatus = BillStatus.COMPLETED
+                } else if (position == 3) {
+                    billStatus = BillStatus.CANCELLED
                 }
                 observeData()
             }
@@ -125,6 +157,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
                 observeData()
             }
         })
+
+        binding.btnLogout.setOnClickListener {
+            logoutConfirmDialog.show()
+        }
     }
 
     override fun observeData() {
@@ -163,7 +199,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
     }
 
     override fun notifyBillListChanged(billResponseId: Int) {
-        billResponseList.remove(billResponseList.first { billResponse -> billResponse.id!! == billResponseId })
+
+        billResponseList.removeIf { it.id == billResponseId }
 //        binding.rvBillList.adapter?.notifyDataSetChanged()
         binding.rvBillList.adapter =
             RecyclerViewBillListAdapter(this, billResponseList)
@@ -183,4 +220,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(), IHomeActivity {
         isAbleToFetchMore = false
         binding.pbLoading.visibility = View.GONE
     }
+
 }

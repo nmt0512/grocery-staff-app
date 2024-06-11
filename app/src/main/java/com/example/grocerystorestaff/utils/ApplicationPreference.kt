@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.example.grocerystorestaff.model.User
-import com.example.grocerystorestaff.model.request.auth.LoginRequest
 
 class ApplicationPreference {
 
@@ -18,24 +17,10 @@ class ApplicationPreference {
         return pref?.getString("accessToken", "").toString()
     }
 
-    fun saveLoginRequest(loginRequest: LoginRequest) {
-        editor?.putString("username", loginRequest.username)
-        editor?.putString("password", loginRequest.password)
-        editor?.apply()
-    }
-
-    fun getLoginRequest(): LoginRequest {
-        val username = pref?.getString("username", "")
-        val password = pref?.getString("password", "")
-        if (username.isNullOrBlank() || password.isNullOrBlank()) {
-            return LoginRequest()
-        }
-        return LoginRequest(username, password)
-    }
-
     fun saveUserInfo(user: User) {
         editor = pref?.edit()
         editor?.putString("id", user.id)
+        editor?.putString("username", user.username)
         editor?.putString("email", user.email)
         editor?.putString("firstName", user.firstName)
         editor?.putString("lastName", user.lastName)
@@ -59,7 +44,6 @@ class ApplicationPreference {
         editor = pref?.edit()
         editor?.remove("id")
         editor?.remove("username")
-        editor?.remove("password")
         editor?.remove("email")
         editor?.remove("firstName")
         editor?.remove("lastName")
