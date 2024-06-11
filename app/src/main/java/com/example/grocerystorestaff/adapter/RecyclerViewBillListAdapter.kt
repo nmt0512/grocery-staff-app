@@ -44,23 +44,24 @@ class RecyclerViewBillListAdapter(
         fun bind(billResponse: BillResponse) {
             val billItemList = billResponse.billItems!!
             binding.txtBillId.text = billResponse.id.toString()
-            Glide.with(binding.root)
-                .load(billItemList[0].productResponse.images[0])
-                .centerCrop()
-                .into(binding.imageViewBill)
+            if (billItemList.isNotEmpty()) {
+                Glide.with(binding.root)
+                    .load(billItemList[0].productResponse.images[0])
+                    .centerCrop()
+                    .into(binding.imageViewBill)
+                val firstBillItem = billItemList.first()
+                binding.txtProduct1.text =
+                    "${firstBillItem.quantity}x ${firstBillItem.productResponse.name}"
 
-            val firstBillItem = billItemList.first()
-            binding.txtProduct1.text =
-                "${firstBillItem.quantity}x ${firstBillItem.productResponse.name}"
-
-            if (billItemList.size > 1) {
-                val secondBillItem = billItemList[1]
-                binding.txtProduct2.visibility = View.VISIBLE
-                binding.txtProduct2.text =
-                    "${secondBillItem.quantity}x ${secondBillItem.productResponse.name}"
-                if (billItemList.size > 2) {
-                    binding.txtOtherProductNumber.visibility = View.VISIBLE
-                    binding.txtOtherProductNumber.text = "+ ${billItemList.size - 2}"
+                if (billItemList.size > 1) {
+                    val secondBillItem = billItemList[1]
+                    binding.txtProduct2.visibility = View.VISIBLE
+                    binding.txtProduct2.text =
+                        "${secondBillItem.quantity}x ${secondBillItem.productResponse.name}"
+                    if (billItemList.size > 2) {
+                        binding.txtOtherProductNumber.visibility = View.VISIBLE
+                        binding.txtOtherProductNumber.text = "+ ${billItemList.size - 2}"
+                    }
                 }
             }
 

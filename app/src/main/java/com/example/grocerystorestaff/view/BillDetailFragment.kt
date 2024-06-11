@@ -51,18 +51,24 @@ class BillDetailFragment(
                 val pickUpDate = billResponse.pickUpTime?.substringBefore(" ")
                 val pickUpLocalDate =
                     LocalDate.parse(pickUpDate, DateTimeFormatter.ofPattern(dateFormat))
-                if (pickUpLocalDate == LocalDate.now()) {
-                    binding.txtPickUpTime.setTextColor(
-                        ContextCompat.getColor(binding.root.context, R.color.pick_up_red)
-                    )
-                } else if (pickUpLocalDate == LocalDate.now().plusDays(1)) {
-                    binding.txtPickUpTime.setTextColor(
-                        ContextCompat.getColor(binding.root.context, R.color.pick_up_orange)
-                    )
-                } else if (pickUpLocalDate == LocalDate.now().plusDays(2)) {
-                    binding.txtPickUpTime.setTextColor(
-                        ContextCompat.getColor(binding.root.context, R.color.pick_up_yellow)
-                    )
+                when (pickUpLocalDate) {
+                    LocalDate.now() -> {
+                        binding.txtPickUpTime.setTextColor(
+                            ContextCompat.getColor(binding.root.context, R.color.pick_up_red)
+                        )
+                    }
+
+                    LocalDate.now().plusDays(1) -> {
+                        binding.txtPickUpTime.setTextColor(
+                            ContextCompat.getColor(binding.root.context, R.color.pick_up_orange)
+                        )
+                    }
+
+                    LocalDate.now().plusDays(2) -> {
+                        binding.txtPickUpTime.setTextColor(
+                            ContextCompat.getColor(binding.root.context, R.color.pick_up_yellow)
+                        )
+                    }
                 }
             }
             binding.txtPickUpTime.text = "${billResponse.pickUpTime}"
@@ -81,6 +87,10 @@ class BillDetailFragment(
             loadingDialog?.show()
             updateStatusOnClickListener(BillStatus.COMPLETED)
         }
+        binding.btnCancel.setOnClickListener {
+            loadingDialog?.show()
+            updateStatusOnClickListener(BillStatus.CANCELLED)
+        }
     }
 
     override fun observeLiveData() {
@@ -96,22 +106,35 @@ class BillDetailFragment(
                 Toast.makeText(this.requireContext(), it.status.description, Toast.LENGTH_SHORT)
                     .show()
                 homeActivity.notifyBillListChanged(it.id!!)
+            } else {
+                Toast.makeText(
+                    this.requireContext(),
+                    "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
     }
 
     private fun bindOnBillStatus(billStatus: BillStatus) {
-        if (billStatus == BillStatus.PAID) {
-            binding.btnComplete.isEnabled = false
-            binding.btnComplete.alpha = 0.5f
-        } else if (billStatus == BillStatus.PREPARED) {
-            binding.btnPrepare.isEnabled = false
-            binding.btnPrepare.alpha = 0.5f
+        when (billStatus) {
+            BillStatus.PAID -> {
+                binding.btnComplete.isEnabled = false
+                binding.btnComplete.alpha = 0.5f
+            }
 
-            binding.btnComplete.isEnabled = true
-            binding.btnComplete.alpha = 1f
-        } else if (billStatus == BillStatus.COMPLETED) {
-            binding.layoutBtn.visibility = View.GONE
+            BillStatus.PREPARED -> {
+                binding.btnPrepare.isEnabled = false
+                binding.btnPrepare.alpha = 0.5f
+
+                binding.btnComplete.isEnabled = true
+                binding.btnComplete.alpha = 1f
+            }
+
+            BillStatus.COMPLETED, BillStatus.CANCELLED -> {
+                binding.layoutBtn.visibility = View.GONE
+            }
         }
         binding.txtBillStatus.text = billStatus.description
     }

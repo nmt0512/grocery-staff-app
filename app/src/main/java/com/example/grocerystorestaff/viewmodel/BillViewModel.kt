@@ -35,11 +35,8 @@ class BillViewModel(context: Context) : ViewModel() {
                     call: Call<BaseResponse<GetAllBillResponse>>,
                     response: Response<BaseResponse<GetAllBillResponse>>
                 ) {
-                    if (response.body() != null) {
-                        billResponseListLiveData.value = response.body()!!.data?.billResponseList
-                    } else {
-                        billResponseListLiveData.value = mutableListOf()
-                    }
+                    billResponseListLiveData.value =
+                        response.body()?.data?.billResponseList ?: mutableListOf()
                 }
 
                 override fun onFailure(call: Call<BaseResponse<GetAllBillResponse>>, t: Throwable) {
@@ -59,11 +56,8 @@ class BillViewModel(context: Context) : ViewModel() {
                     call: Call<BaseResponse<UpdateBillStatusResponse>>,
                     response: Response<BaseResponse<UpdateBillStatusResponse>>
                 ) {
-                    if (response.body() != null) {
-                        billResponseLiveData.value = response.body()!!.data?.billResponse
-                    } else {
-                        billResponseLiveData.value = BillResponse()
-                    }
+                    billResponseLiveData.value =
+                        response.body()?.data?.billResponse ?: BillResponse()
                 }
 
                 override fun onFailure(
