@@ -37,9 +37,7 @@ class BillDetailFragment(
             LinearLayoutManager(this.requireContext(), LinearLayoutManager.VERTICAL, false)
 
         val billItemResponseList = billResponse.billItems
-        billItemResponseList?.let {
-            binding.rvBillItem.adapter = RecyclerViewBillDetailAdapter(it)
-        }
+        binding.rvBillItem.adapter = RecyclerViewBillDetailAdapter(billItemResponseList)
 
         binding.txtTotalPrice.text =
             "Tổng tiền: ${NumberConverterUtil.convertNumberToStringWithDot(billResponse.totalPrice!!)} Đ"
